@@ -1,0 +1,195 @@
+- step:
+    image: pytorch/pytorch:latest
+    command:
+        - conda install -c conda-forge tensorboardx
+        - conda install -c conda-forge tensorboard
+        - conda install -c menpo opencv3
+        - apt-get update
+        - apt-get install -y libgtk2.0-dev
+        - tar -xf /valohai/inputs/data/VOC2012.tar -C /tmp
+        - python train_voc.py {parameters}
+    
+    inputs:
+      - name: data
+        default: swift://f8a5dbc8033343aea820c139245afe13/COCO2017/VOC2012.tar
+        
+    
+    parameters:
+
+    - default: 0.0005
+      description: Decay value
+      name: Decay
+      pass-as: --decay {v}
+      type: float
+      
+    - default: 1.0
+      description: Initial learning rate
+      name: object_scale
+      pass-as: --object_scale {v}
+      type: float
+      
+    - default: 100
+      description: Number of epoches
+      name: Epoches 
+      pass-as: --num_epoches {v}
+      type: integer
+      
+    - default: 20
+      description: Minibatch size,default 4
+      name: Minibatch size
+      pass-as: --batch_size {v}
+      type: integer
+      
+    - default: 3
+      description: Early stopping's parameter, set 0 to disable
+      name: Early stopping
+      pass-as: --es_patience {v}
+      type: integer
+      
+    - default: 0.5
+      description: Drop out value
+      name: Drop out
+      pass-as: --dropout {v}
+      type: float
+      
+    - default: 0.9
+      description: Momentum, recommend default "0.9"
+      name: Momentum
+      pass-as: --momentum {v}
+      type: float
+      
+    - default: 2012
+      description: Choose dataset to train ( COCO or VOC )
+      name: Dataset
+      pass-as: --year {v} 
+      type: string    
+      
+      
+    - default: /tmp/VOCdevkit
+      description: Input Path to dataset
+      name: VOCdevkit path 
+      pass-as: --data_path {v}
+      type: string
+      
+    - default: /valohai/outputs
+      description: Output Path to save Trained Model
+      name: Output Trained Model 
+      pass-as: --saved_path {v}
+      type: string
+      
+    - default: /valohai/outputs/log
+      description: Output Path to save log
+      name: Log path
+      pass-as: --log_path {v}
+      type: string
+      
+    
+    
+    name: Train VOC2012 dataset
+
+- step: 
+    image: pytorch/pytorch:latest
+    command:
+        - conda install -c conda-forge tensorboardx
+        - conda install -c conda-forge tensorboard
+        - conda install -c menpo opencv3
+        - apt-get update
+        - apt-get install -y libgtk2.0-dev
+        - tar -xzf /valohai/inputs/data/COCO.tar.gz -C /tmp
+        - python train_coco.py {parameters}
+    
+    inputs:
+      - name: data
+        default: swift://f8a5dbc8033343aea820c139245afe13/COCO2017/COCO.tar.gz
+        
+    
+    parameters:  
+    - default: 32
+      description: Minibatch size,default 20
+      name: Minibatch size
+      pass-as: --batch_size {v}
+      type: integer
+    
+    - default: 100
+      description: Number of epoches
+      name: Epoches 
+      pass-as: --num_epoches {v}
+      type: integer
+
+    - default: 0.0005
+      description: Decay value
+      name: Decay
+      pass-as: --decay {v}
+      type: float
+      
+    - default: 1.0
+      description: Object Scale
+      name: object_scale
+      pass-as: --object_scale {v}
+      type: float
+         
+    - default: 1.0
+      description: Class Scale
+      name: class_scale
+      pass-as: --class_scale {v}
+      type: float
+      
+    - default: 0.5
+      description: noobject_scale
+      name: noobject_scale 
+      pass-as: --noobject_scale {v}
+      type: float
+      
+    - default: 5.0
+      description: coord_scale
+      name: coord_scale
+      pass-as: --coord_scale {v}
+      type: float
+           
+    - default: 3
+      description: Early stopping's parameter, set 0 to disable
+      name: Early stopping
+      pass-as: --es_patience {v}
+      type: integer
+      
+    - default: 0.5
+      description: Drop out value
+      name: Drop out
+      pass-as: --dropout {v}
+      type: float
+      
+    - default: 0.9
+      description: Momentum, recommend default "0.9"
+      name: Momentum
+      pass-as: --momentum {v}
+      type: float
+      
+    - default: 2017
+      description: Choose dataset to train ( COCO or VOC )
+      name: Dataset
+      pass-as: --year {v} 
+      type: string    
+      
+      
+    - default: /tmp/COCO
+      description: Input Path to dataset
+      name: VOCdevkit path 
+      pass-as: --data_path {v}
+      type: string
+      
+    - default: /valohai/outputs
+      description: Output Path to save Trained Model
+      name: Output Trained Model 
+      pass-as: --saved_path {v}
+      type: string
+      
+    - default: /valohai/outputs/log
+      description: Output Path to save log
+      name: Log path
+      pass-as: --log_path {v}
+      type: string
+      
+    
+    
+    name: Train COCO2017 dataset
+
