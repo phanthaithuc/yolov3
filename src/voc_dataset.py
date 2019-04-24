@@ -12,9 +12,7 @@ class VOCDataset(Dataset):
             self.data_path = os.path.join(root_path, "VOC{}".format(year))
         id_list_path = os.path.join(self.data_path, "ImageSets/Main/{}.txt".format(mode))
         self.ids = [id.strip() for id in open(id_list_path)]
-        self.classes = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow',
-                        'diningtable', 'dog', 'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train',
-                        'tvmonitor']
+        self.classes = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow','diningtable', 'dog', 'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor', 'pistol']
         self.image_size = image_size
         self.num_classes = len(self.classes)
         self.num_images = len(self.ids)
